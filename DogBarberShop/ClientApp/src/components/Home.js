@@ -22,7 +22,7 @@ export function Home() {
     const [dateField, setDateField] = useState("2021-07-26T22:08");
     const { isLoading, error, data, isFetching } = useQuery(`queue`, () =>
         Axios.get(
-            `${BACEURL}/queue/get-all-queues`
+            `${BACEURL}/queue/getallqueues`
         ).then((res) => {
             setDataQueue(res.data)
             setQueueExists(() => res.data.filter((v)=>v.userName===user.UserName))

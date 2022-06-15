@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using DogBarberShop.Models;
 using System.Collections.Generic;
 using DogBarberShop.DBContexts;
-using System.Linq;
 using System;
 using NLog;
 using DogBarberShop.Repositories;
@@ -14,12 +12,10 @@ namespace Barbershop.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private MyDBContext myDbContext;
         private AuthRepositories authRepositories;
         private static Logger logger;
         public AuthController(MyDBContext context)
         {
-            myDbContext = context;
             logger = LogManager.GetCurrentClassLogger();
             this.authRepositories = new AuthRepositories(context);
         }

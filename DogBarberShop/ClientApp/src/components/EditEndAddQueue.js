@@ -24,7 +24,7 @@ export function EditEndAddQueue({ queueExists }) {
             return;
         }
         console.log(queueExists.queueId)
-        Axios.post(`${BACEURL}/queue/delete-queue`, {
+        Axios.post(`${BACEURL}/queue/deletequeue`, {
             Id: queueExists.queueId,
             TimeOfTheQueue: dateField,
             CreateAt: queueExists.createAt,
@@ -52,7 +52,7 @@ export function EditEndAddQueue({ queueExists }) {
             setMessage('The entire form must be completed!');
             return;
         }
-        Axios.post(`${BACEURL}/queue/update-queue`, {
+        Axios.post(`${BACEURL}/queue/updatequeue`, {
             TimeOfTheQueue: dateField,
             Id: queueExists.queueId
         })
@@ -85,7 +85,7 @@ export function EditEndAddQueue({ queueExists }) {
             currentdate.getHours() +
             ":" +
             currentdate.getMinutes();
-        Axios.post(`${BACEURL}/queue/add-queue`, {
+        Axios.post(`${BACEURL}/queue/addqueue`, {
             UserId: user.userId,
             TimeOfTheQueue: dateField,
             CreateAt: datetime

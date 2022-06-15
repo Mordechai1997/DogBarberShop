@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.Data;
 using DogBarberShop.DBContexts;
-using System.Linq;
 using System;
 using DogBarberShop.Models;
-using System.Collections.Generic;
 using NLog;
 using DogBarberShop.Repositories;
 
@@ -15,19 +11,16 @@ namespace DogBarberShop.Controllers
     [Route("api/[controller]")]
     public class QueueController : ControllerBase
     {
-        private MyDBContext myDbContext;
         private static Logger logger;
         private QueueRepositories queueRepositories;
 
         public QueueController(MyDBContext context)
         {
-            myDbContext = context;
             logger = LogManager.GetCurrentClassLogger();
             queueRepositories = new QueueRepositories(context);
-
         }
 
-        [HttpGet("get-all-queues")]
+        [HttpGet("getallqueues")]
         public ActionResult GetAllQueues()
         {
             try
@@ -42,7 +35,7 @@ namespace DogBarberShop.Controllers
                 return StatusCode(500, m.Message);
             }
         }
-        [HttpPost("update-queue")]
+        [HttpPost("updatequeue")]
         public ActionResult UpdateQueue(QueueData queue)
         {
             try
@@ -67,7 +60,7 @@ namespace DogBarberShop.Controllers
                 return StatusCode(500, m.Message);
             }
         }
-        [HttpPost("delete-queue")]
+        [HttpPost("deletequeue")]
         public ActionResult DeleteQueue(QueueData queue)
         {
             try
@@ -79,7 +72,7 @@ namespace DogBarberShop.Controllers
             }
             catch (Exception m)
             {
-                if (!myDbContext.Queue.Any(i => i.Id == queue.Id))
+                if (queueRepositories.GetQueueById(queue.Id)==null)
                 {
                     logger.Info($"Try delete queue {queue.Id}");
                     return Ok(new { IsDelete = true, ErrorMessage = "No existing queue found" });
@@ -91,7 +84,7 @@ namespace DogBarberShop.Controllers
                 }
             }
         }
-        [HttpPost("add-queue")]
+        [HttpPost("addqueue")]
         public ActionResult AddQueue(QueueData queue)
         {
             try
